@@ -252,9 +252,21 @@
       padding:24px 20px; width:calc(25% - 18px); min-width:220px;
       box-shadow:var(--shadow); position:relative; overflow:hidden;
       display:flex; flex-direction:column; align-items:center; gap:14px;
-      transition:transform .3s, box-shadow .3s;
+      border:1px solid rgba(233,162,9,.12);
+      isolation:isolate;
+      transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
     }
-    .product-card:hover { transform:translateY(-6px); box-shadow:0 12px 28px rgba(0,0,0,.13); }
+    .product-card::before {
+      content:''; position:absolute; inset:auto 0 0 0; height:0;
+      background:linear-gradient(180deg, rgba(255,203,69,.10), rgba(233,162,9,.18));
+      transition:height .35s ease; z-index:-1;
+    }
+    .product-card:hover {
+      transform:translateY(-10px) scale(1.015);
+      box-shadow:0 18px 36px rgba(0,0,0,.16);
+      border-color:rgba(233,162,9,.45);
+    }
+    .product-card:hover::before { height:100%; }
 
     /* badge tipo */
     .product-card .prod-badge {
@@ -270,9 +282,15 @@
       width:120px; height:120px; border-radius:50%;
       background:var(--secondary-bg); display:flex; align-items:center; justify-content:center;
       overflow:hidden; border:3px solid var(--accent-light);
+      transition:transform .3s ease, border-color .3s ease, background .3s ease;
     }
     .prod-img-wrap img  { width:100%; height:100%; object-fit:cover; }
-    .prod-img-wrap span { font-size:3rem; } /* emoji fallback */
+    .prod-img-wrap span { font-size:3rem; transition:transform .3s ease; } /* emoji fallback */
+    .product-card .prod-badge { transition:transform .3s ease, background .3s ease; }
+    .product-card:hover .prod-img-wrap { transform:translateY(-4px) rotate(-2deg); }
+    .product-card:hover .prod-img-wrap span { transform:scale(1.12); }
+    .product-card:hover .prod-badge { transform:scale(1.08); background:var(--accent-light); color:var(--dark); }
+    .product-card:hover .btn-default { transform:translateX(3px); }
 
     .product-card h3 { font-size:1.05rem; font-weight:700; text-align:center; }
     .product-card .prod-desc { font-size:.83rem; color:var(--muted); text-align:center; line-height:1.6; }
@@ -370,9 +388,15 @@
       display:flex; gap:10px; align-items:flex-start;
       background:var(--white); border-radius:var(--radius);
       padding:12px 14px; box-shadow:0 2px 8px rgba(0,0,0,.07);
-      transition:transform .25s, box-shadow .25s;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      border:1px solid rgba(233,162,9,.10);
     }
-    .tl-item:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+    .tl-item:hover {
+      transform:translateY(-6px);
+      box-shadow:0 12px 26px rgba(0,0,0,.14);
+      border-color:rgba(233,162,9,.45);
+      background:linear-gradient(180deg, #fff, rgba(255,232,180,.35));
+    }
 
     .tl-year {
       flex-shrink:0; width:44px;
@@ -381,21 +405,6 @@
     }
     .tl-text h4 { font-size:.85rem; font-weight:700; }
     .tl-text p  { font-size:.78rem; color:var(--muted); line-height:1.55; margin-top:2px; }
-
-    /* ── Depoimentos ── */
-    #feedbacks { display:flex; flex-direction:column; gap:16px; }
-    .feedback {
-      display:flex; align-items:center; gap:16px;
-      background:var(--white); padding:14px; border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
-    .feedback-avatar { width:80px; height:80px; border-radius:50%; object-fit:cover; flex-shrink:0; }
-    .feedback-content p { display:flex; justify-content:space-between; font-weight:600; font-size:.9rem; }
-    .feedback-content p span { color:var(--accent); }
-    .feedback-content blockquote {
-      font-size:.84rem; color:var(--muted); line-height:1.65; margin-top:4px;
-      border-left:3px solid var(--accent-light); padding-left:10px;
-    }
 
     /* ── Responsivo ── */
     @media(max-width:900px){
@@ -427,11 +436,18 @@
       background:var(--white); border-radius:var(--radius);
       padding:22px 28px; min-width:160px; text-align:center;
       box-shadow:var(--shadow); text-decoration:none; color:var(--dark);
-      transition:transform .3s, box-shadow .3s;
+      transition:transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
       display:flex; flex-direction:column; align-items:center; gap:10px;
+      border:1px solid rgba(233,162,9,.12);
     }
-    .contact-card:hover { transform:translateY(-5px); box-shadow:0 10px 24px rgba(0,0,0,.13); }
-    .contact-card i { font-size:2rem; color:var(--accent); }
+    .contact-card:hover {
+      transform:translateY(-8px) scale(1.03);
+      box-shadow:0 16px 32px rgba(0,0,0,.15);
+      background:var(--secondary-bg);
+      border-color:rgba(233,162,9,.45);
+    }
+    .contact-card i { font-size:2rem; color:var(--accent); transition:transform .3s ease; }
+    .contact-card:hover i { transform:scale(1.16) rotate(-4deg); }
     .contact-card h4 { font-size:.95rem; font-weight:700; }
     .contact-card p  { font-size:.78rem; color:var(--muted); }
 
@@ -755,50 +771,34 @@
     <div class="about-timeline">
 
       <div class="tl-item">
-        <div class="tl-year">2013</div>
+        <div class="tl-year">2014.2<br>2017.2</div>
         <div class="tl-text">
-          <h4>Início na área de TI</h4>
-          <p>Suporte técnico, montagem e manutenção de computadores.</p>
+          <h4>Início da vida acadêmica</h4>
+          <p>Formação em Redes de Computadores, construindo a base técnica para atuação em infraestrutura de TI.</p>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-year">2016</div>
+        <div class="tl-year">2017<br>2022</div>
         <div class="tl-text">
-          <h4>Formado em Redes</h4>
-          <p>Conclusão da formação técnica em Redes de Computadores.</p>
+          <h4>Primeira experiência profissional em TI</h4>
+          <p>Início como estagiário e evolução para técnico de TI, atuando com suporte, manutenção e ambiente corporativo.</p>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-year">2017</div>
+        <div class="tl-year">2022<br>2024</div>
         <div class="tl-text">
-          <h4>Primeira Experiência — Estágio</h4>
-          <p>Primeiro contato profissional com infraestrutura corporativa.</p>
+          <h4>Início da experiência como analista</h4>
+          <p>Transição para análise de sistemas e infraestrutura, assumindo responsabilidades mais estratégicas e técnicas.</p>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-year">2018</div>
+        <div class="tl-year">2024<br>2026</div>
         <div class="tl-text">
-          <h4>Primeiro Emprego como Técnico TI</h4>
-          <p>Suporte técnico, redes e administração de sistemas.</p>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-year">2022</div>
-        <div class="tl-text">
-          <h4>Tornando-se Analista</h4>
-          <p>Transição para análise de sistemas e infraestrutura avançada.</p>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-year">2024</div>
-        <div class="tl-text">
-          <h4>TI na Área da Saúde</h4>
-          <p>Experiência com sistemas e infraestrutura em ambiente hospitalar.</p>
+          <h4>Evolução como analista</h4>
+          <p>Continuação da jornada como analista, ganhando ainda mais experiência em ambientes corporativos e projetos de TI.</p>
         </div>
       </div>
 
@@ -812,49 +812,6 @@
 
     </div>
 
-    <!-- ── Depoimentos fixos (visuais) ───────────────
-         Adicione/remova .feedback conforme necessário  -->
-    <div id="feedbacks">
-
-      <div class="feedback">
-        <!-- Troque avatar.png por uma foto real (ou deixe como placeholder) -->
-        <img src="avatar.png" class="feedback-avatar" alt="Avatar">
-        <div class="feedback-content">
-          <p>Rafael F. — Analista de Suporte
-            <span>
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </span>
-          </p>
-          <blockquote>
-            "O eBook de Windows Server salvou meu projeto. Conteúdo muito claro e
-            direto ao ponto. Valeu cada centavo!"
-          </blockquote>
-        </div>
-      </div>
-
-      <div class="feedback">
-        <img src="avatar.png" class="feedback-avatar" alt="Avatar">
-        <div class="feedback-content">
-          <p>Carla M. — Sysadmin
-            <span>
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </span>
-          </p>
-          <blockquote>
-            "Tutorial de Active Directory é o melhor que já vi. Prático, completo
-            e com exemplos do dia a dia. Implementei na empresa na primeira tentativa."
-          </blockquote>
-        </div>
-      </div>
-
-    </div><!-- /#feedbacks -->
-
-    <!-- ── Área de comentários futura ──────────────
-         Será implementada na próxima etapa          -->
 
   </div><!-- /#about-content -->
 
@@ -894,11 +851,6 @@
       <p>Tutoriais Gratuitos</p>
     </a>
 
-    <a href="https://tiktok.com/@seuperfil" class="contact-card" target="_blank" rel="noopener">
-      <i class="fa-brands fa-tiktok"></i>
-      <h4>TikTok</h4>
-      <p>Dicas Rápidas</p>
-    </a>
 
     <a href="https://instagram.com/seuperfil" class="contact-card" target="_blank" rel="noopener">
       <i class="fa-brands fa-instagram"></i>
@@ -982,7 +934,6 @@ $(document).ready(function () {
   ScrollReveal().reveal('#about-photo-wrap',{ origin:'left',   duration:1000, distance:'24px' });
   ScrollReveal().reveal('.about-bubble',    { origin:'right',  duration:900,  distance:'20px' });
   ScrollReveal().reveal('.tl-item',         { origin:'bottom', duration:600,  distance:'16px', interval:80 });
-  ScrollReveal().reveal('.feedback',        { origin:'bottom', duration:700,  distance:'16px', interval:120 });
   ScrollReveal().reveal('.contact-card',    { origin:'bottom', duration:700,  distance:'16px', interval:100 });
 });
 </script>

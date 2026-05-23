@@ -3,83 +3,84 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>eBooks | Hi-Tech</title>
+  <title>Tutoriais | Hi-Tech</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="shared.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
   <style>
-    /* ── capa do ebook ── */
-    .ebook-cover {
-      width:80px; height:106px;
-      border-radius:4px 10px 10px 4px;
+    /* ── Card de vídeo/curso ── */
+    .tut-card {
+      background:var(--white); border-radius:20px; overflow:hidden;
+      box-shadow:var(--shadow); transition:transform .3s, box-shadow .3s;
+      display:flex; flex-direction:column;
+    }
+    .tut-card:hover { transform:translateY(-6px); box-shadow:0 14px 32px rgba(0,0,0,.13); }
+
+    .tut-thumb {
+      height:165px; background:var(--secondary-bg);
       display:flex; align-items:center; justify-content:center;
-      font-size:2.4rem; flex-shrink:0;
-      box-shadow:4px 4px 0 rgba(0,0,0,.15), 6px 6px 0 rgba(0,0,0,.08);
-      position:relative;
+      position:relative; overflow:hidden;
     }
-    /* lombada */
-    .ebook-cover::before {
-      content:''; position:absolute; left:0; top:0; bottom:0; width:8px;
-      background:rgba(0,0,0,.2); border-radius:4px 0 0 4px;
+    .tut-thumb-label {
+      font-family:'Bebas Neue',sans-serif; font-size:4.5rem;
+      color:rgba(233,162,9,.18); letter-spacing:3px; user-select:none;
     }
+    .tut-play {
+      position:absolute; width:56px; height:56px;
+      border:3px solid var(--accent); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.85); cursor:pointer;
+      transition:.25s; z-index:2;
+    }
+    .tut-play i { color:var(--accent); font-size:1.1rem; margin-left:3px; }
+    .tut-card:hover .tut-play { background:var(--accent); }
+    .tut-card:hover .tut-play i { color:var(--white); }
 
-    /* card horizontal para ebook */
-    .ebook-card {
-      background:var(--white); border-radius:20px; padding:24px 26px;
-      box-shadow:var(--shadow); display:flex; gap:24px; align-items:flex-start;
-      transition:transform .3s, box-shadow .3s; position:relative; overflow:hidden;
+    .tut-cat-tag {
+      position:absolute; top:12px; left:12px; z-index:3;
+      background:var(--accent); color:var(--white);
+      font-size:.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      padding:4px 12px; border-radius:20px;
     }
-    .ebook-card::before {
-      content:''; position:absolute; top:0; left:0; bottom:0; width:4px;
-      background:var(--accent); transform:scaleY(0); transform-origin:bottom; transition:.35s;
-    }
-    .ebook-card:hover { transform:translateY(-5px); box-shadow:0 14px 32px rgba(0,0,0,.13); }
-    .ebook-card:hover::before { transform:scaleY(1); }
-
-    .ebook-info { flex:1; display:flex; flex-direction:column; gap:10px; }
-    .ebook-info h3 { font-size:1.1rem; font-weight:700; }
-    .ebook-info p  { font-size:.87rem; color:var(--muted); line-height:1.7; }
-
-    .ebook-tags { display:flex; gap:6px; flex-wrap:wrap; }
-    .ebook-tag {
-      font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:20px;
-      background:var(--secondary-bg); color:var(--dark);
+    .tut-type-tag {
+      position:absolute; top:12px; right:12px; z-index:3;
+      background:var(--white); color:var(--dark);
+      font-size:.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      padding:4px 12px; border-radius:20px; box-shadow:var(--shadow);
     }
 
-    .ebook-footer {
-      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
-      padding-top:12px; border-top:1px solid rgba(0,0,0,.06);
+    .tut-body { padding:20px 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+    .tut-body h3 { font-size:1rem; font-weight:700; line-height:1.35; }
+    .tut-body p  { font-size:.84rem; color:var(--muted); line-height:1.65; flex:1; }
+    .tut-meta    { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    .tut-meta span { font-size:.76rem; color:var(--muted); display:flex; align-items:center; gap:5px; }
+    .tut-meta .lvl-i { color:#2a9d5c; font-weight:700; }
+    .tut-meta .lvl-m { color:var(--accent); font-weight:700; }
+    .tut-meta .lvl-a { color:#e63946; font-weight:700; }
+    .tut-link {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.82rem; font-weight:700; color:var(--accent);
+      text-decoration:none; transition:.2s; padding-top:8px;
+      border-top:1px solid rgba(0,0,0,.06);
     }
-    .ebook-price { font-size:1.4rem; font-weight:700; color:var(--accent); }
-    .ebook-pages { font-size:.78rem; color:var(--muted); }
+    .tut-link:hover { color:var(--dark); }
+    .tut-link i { transition:.2s; }
+    .tut-card:hover .tut-link i { transform:translateX(4px); }
 
-    /* grid vertical para ebooks */
-    .ebook-grid { display:flex; flex-direction:column; gap:20px; }
+    /* Badge free/pago */
+    .tut-price { font-size:.9rem; font-weight:700; color:var(--accent); }
+    .tut-price.free { color:#2a9d5c; }
 
-    /* banner destaque */
-    .ebook-banner {
-      background:var(--secondary-bg); border-radius:20px;
-      padding:32px 36px; display:flex; align-items:center;
-      justify-content:space-between; gap:24px; flex-wrap:wrap;
-      margin-bottom:40px; box-shadow:var(--shadow);
+    /* Filtro */
+    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
+    .filter-btn {
+      border:2px solid var(--accent-light); background:transparent;
+      border-radius:20px; padding:7px 20px; font-family:'Poppins',sans-serif;
+      font-size:.82rem; font-weight:600; cursor:pointer; color:var(--muted); transition:.2s;
     }
-    .ebook-banner h2 { font-size:1.6rem; font-weight:800; }
-    .ebook-banner h2 span { color:var(--accent); }
-    .ebook-banner p { color:var(--muted); font-size:.9rem; margin-top:6px; max-width:440px; }
-
-
-    /* Ajustes responsivos finais para eBooks */
-    .ebook-card .card-btn, .ebook-banner .card-btn { white-space:nowrap; }
-    @media(max-width:760px){
-      .ebook-banner { padding:24px; align-items:flex-start; }
-      .ebook-banner > div:last-child { text-align:left !important; width:100%; }
-      .ebook-card { flex-direction:column; padding:22px; }
-      .ebook-cover { width:72px; height:96px; }
-      .ebook-footer { align-items:flex-start; flex-direction:column; }
-      .ebook-card .card-btn, .ebook-banner .card-btn { width:100%; justify-content:center; }
-    }
+    .filter-btn.active, .filter-btn:hover { background:var(--accent); color:var(--white); border-color:var(--accent); }
   </style>
 </head>
 <body>
@@ -91,9 +92,9 @@
     <ul id="nav_list">
       <li class="nav-item"><a href="index.html">Início</a></li>
       <li class="nav-item"><a href="softwares.html">Softwares</a></li>
-      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
-      <li class="nav-item active"><a href="ebooks.html">eBooks</a></li>
-      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+      <li class="nav-item active"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="index.html#about">Portfólio</a></li>
     </ul>
     <button class="btn-contact" onclick="location.href='index.html#contact'">Fale Comigo</button>
     <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
@@ -102,9 +103,9 @@
     <ul id="mobile_nav_list">
       <li class="nav-item"><a href="index.html">Início</a></li>
       <li class="nav-item"><a href="softwares.html">Softwares</a></li>
-      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
-      <li class="nav-item active"><a href="ebooks.html">eBooks</a></li>
-      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+      <li class="nav-item active"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="index.html#about">Portfólio</a></li>
     </ul>
     <button class="btn-contact" style="margin-top:8px" onclick="location.href='index.html#contact'">Fale Comigo</button>
   </div>
@@ -112,190 +113,213 @@
 
 <!-- ═══ HERO ═══ -->
 <div class="page-hero">
-  <p class="breadcrumb"><a href="index.html">Início</a> › eBooks</p>
-  <h1>Biblioteca de <span>eBooks</span></h1>
-  <p>Guias completos em PDF escritos por quem vive a TI. Baixe uma vez, use para sempre.</p>
+  <p class="breadcrumb"><a href="index.html">Início</a> › Tutoriais</p>
+  <h1>Tutoriais & <span>Cursos</span></h1>
+  <p>
+    Vídeos de instalação de softwares, mini-cursos e cursos completos sobre
+    Windows, Linux, redes e infraestrutura de TI.
+  </p>
 </div>
 
 <!-- ═══ CONTEÚDO ═══ -->
 <div class="page-content">
-
-  <!-- Banner destaque -->
-  <div class="ebook-banner">
-    <div>
-      <h2>Pack <span>Completo</span> — todos os eBooks</h2>
-      <p>Adquira todos os eBooks com desconto especial e tenha a biblioteca completa de TI na sua mão.</p>
-    </div>
-    <div style="text-align:right; flex-shrink:0;">
-      <div style="font-size:2rem; font-weight:900; color:var(--accent);">R$ 199,90</div>
-      <div style="font-size:.8rem; color:var(--muted); margin-bottom:12px; text-decoration:line-through;">De R$ 318,50</div>
-      <!-- Troque # pelo link do pack completo -->
-      <a href="#" class="card-btn"><i class="fa-solid fa-bolt"></i> Comprar Pack Completo</a>
-    </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="instalacao">Instalação</button>
+    <button class="filter-btn" data-filter="minicurso">Mini-curso</button>
+    <button class="filter-btn" data-filter="curso">Curso Completo</button>
+    <button class="filter-btn" data-filter="windows">Windows</button>
+    <button class="filter-btn" data-filter="linux">Linux</button>
+    <button class="filter-btn" data-filter="redes">Redes</button>
   </div>
 
   <!-- ══════════════════════════════════════════
-       LISTA DE EBOOKS
-       Para adicionar um eBook:
-       1. Copie um bloco .ebook-card
-       2. Edite: cor da capa, emoji, título,
-          descrição, tags, páginas, preço e href
+       GRID DE TUTORIAIS
+       Para adicionar:
+       1. Copie um bloco .tut-card
+       2. Edite: data-cat, label do thumb, tags,
+          h3, p, meta (duração/views/nível),
+          preço e href do link
        ══════════════════════════════════════════ -->
-  <div class="ebook-grid">
+  <div class="card-grid" id="tut-grid">
 
-    <!-- eBook 1 -->
-    <div class="ebook-card">
-      <div class="ebook-cover" style="background:#dbeafe;">📘</div>
-      <div class="ebook-info">
-        <h3>Windows Server do Zero</h3>
-        <p>
-          Guia completo de instalação, configuração e administração do Windows Server 2019/2022.
-          Cobre AD DS, DNS, DHCP, File Server, GPO, IIS e hardening de segurança. Com exemplos reais
-          de ambiente corporativo e laboratório passo a passo.
-        </p>
-        <div class="ebook-tags">
-          <span class="ebook-tag">Windows Server</span>
-          <span class="ebook-tag">Active Directory</span>
-          <span class="ebook-tag">GPO</span>
-          <span class="ebook-tag">DNS</span>
-          <span class="ebook-tag">Iniciante → Avançado</span>
+    <!-- ─── INSTALAÇÕES ─── -->
+    <div class="tut-card" data-cat="instalacao windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">WIN</span>
+        <span class="tut-cat-tag">Windows</span>
+        <span class="tut-type-tag">Instalação</span>
+        <!-- Troque href pelo link do YouTube -->
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Como instalar o Windows 11 do zero</h3>
+        <p>Particionamento, drivers, configurações iniciais e otimizações pós-instalação. Completo e prático.</p>
+        <div class="tut-meta">
+          <span>⏱ 18 min</span>
+          <span>👁 2.4K views</span>
+          <span class="lvl-i">● Iniciante</span>
         </div>
-        <div class="ebook-footer">
-          <span class="ebook-price">R$ 49,90</span>
-          <span class="ebook-pages">📄 180 páginas</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="instalacao windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">OFF</span>
+        <span class="tut-cat-tag">Windows</span>
+        <span class="tut-type-tag">Instalação</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Instalando Microsoft 365 (Office) corretamente</h3>
+        <p>Download oficial, instalação silenciosa via ODT e ativação. Sem crack, sem risco.</p>
+        <div class="tut-meta">
+          <span>⏱ 12 min</span>
+          <span>👁 1.8K views</span>
+          <span class="lvl-i">● Iniciante</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="instalacao linux">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">LAMP</span>
+        <span class="tut-cat-tag">Linux</span>
+        <span class="tut-type-tag">Instalação</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Servidor LAMP no Ubuntu — Apache, MySQL e PHP</h3>
+        <p>Do zero ao servidor web com SSL, hardening e backup automatizado em ambiente Linux.</p>
+        <div class="tut-meta">
+          <span>⏱ 32 min</span>
+          <span>👁 1.2K views</span>
+          <span class="lvl-m">● Intermediário</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- ─── MINI-CURSOS ─── -->
+    <div class="tut-card" data-cat="minicurso windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">GPO</span>
+        <span class="tut-cat-tag">Active Directory</span>
+        <span class="tut-type-tag">Mini-curso</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>GPO na prática — bloqueando e liberando</h3>
+        <p>Políticas de grupo do zero. Gerencie usuários, restrições e configurações com eficiência corporativa.</p>
+        <div class="tut-meta">
+          <span>⏱ 45 min</span>
+          <span>👁 3.1K views</span>
+          <span class="lvl-a">● Avançado</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="minicurso redes">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">VLAN</span>
+        <span class="tut-cat-tag">Redes</span>
+        <span class="tut-type-tag">Mini-curso</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>VLAN e segmentação de redes</h3>
+        <p>Criando VLANs no switch, roteamento inter-VLAN e boas práticas de segmentação para empresas.</p>
+        <div class="tut-meta">
+          <span>⏱ 28 min</span>
+          <span>👁 980 views</span>
+          <span class="lvl-m">● Intermediário</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- ─── CURSOS COMPLETOS ─── -->
+    <div class="tut-card" data-cat="curso windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">WSRV</span>
+        <span class="tut-cat-tag">Windows Server</span>
+        <span class="tut-type-tag">Curso Completo</span>
+        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Windows Server do Zero ao Avançado</h3>
+        <p>Instalação, AD DS, DNS, DHCP, File Server, GPO, IIS e segurança. Módulos práticos com laboratório virtual.</p>
+        <div class="tut-meta">
+          <span>⏱ 6h30</span>
+          <span>👁 500+ alunos</span>
+          <span class="lvl-i">● Iniciante → Avançado</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
+          <span class="tut-price">R$ 89,90</span>
           <!-- Troque # pelo link de compra (Hotmart, Kirvano…) -->
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
         </div>
       </div>
     </div>
 
-    <!-- eBook 2 -->
-    <div class="ebook-card">
-      <div class="ebook-cover" style="background:#dcfce7;">📗</div>
-      <div class="ebook-info">
-        <h3>Linux para Administradores</h3>
-        <p>
-          Domine o terminal, gerenciamento de pacotes, serviços, permissões e segurança em
-          ambientes Linux corporativos. Inclui shell script, agendamento com cron, SSH hardening
-          e administração de servidores Ubuntu/Debian em produção.
-        </p>
-        <div class="ebook-tags">
-          <span class="ebook-tag">Linux</span>
-          <span class="ebook-tag">Ubuntu</span>
-          <span class="ebook-tag">Shell Script</span>
-          <span class="ebook-tag">Segurança</span>
-          <span class="ebook-tag">Intermediário</span>
+    <div class="tut-card" data-cat="curso linux">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">LNX</span>
+        <span class="tut-cat-tag">Linux</span>
+        <span class="tut-type-tag">Curso Completo</span>
+        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Linux para Administradores de Sistemas</h3>
+        <p>Terminal, serviços, segurança, automação com shell script e administração de servidores em produção.</p>
+        <div class="tut-meta">
+          <span>⏱ 8h</span>
+          <span>👁 320+ alunos</span>
+          <span class="lvl-m">● Intermediário</span>
         </div>
-        <div class="ebook-footer">
-          <span class="ebook-price">R$ 59,90</span>
-          <span class="ebook-pages">📄 210 páginas</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
+          <span class="tut-price">R$ 79,90</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
         </div>
       </div>
     </div>
 
-    <!-- eBook 3 -->
-    <div class="ebook-card">
-      <div class="ebook-cover" style="background:#fef9c3;">🔐</div>
-      <div class="ebook-info">
-        <h3>Segurança em Redes Corporativas</h3>
-        <p>
-          Firewall, VPN, VLAN, IDS/IPS, monitoramento com Zabbix e boas práticas de segurança
-          da informação. Guia focado em ambientes Windows e Linux com exemplos de configuração
-          do pfSense e políticas de segurança corporativa.
-        </p>
-        <div class="ebook-tags">
-          <span class="ebook-tag">Segurança</span>
-          <span class="ebook-tag">pfSense</span>
-          <span class="ebook-tag">VPN</span>
-          <span class="ebook-tag">VLAN</span>
-          <span class="ebook-tag">Intermediário</span>
+    <div class="tut-card" data-cat="curso redes">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">NET</span>
+        <span class="tut-cat-tag">Redes</span>
+        <span class="tut-type-tag">Curso Completo</span>
+        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Redes do Zero — TCP/IP ao pfSense</h3>
+        <p>Fundamentos de redes, endereçamento IP, switching, roteamento, firewall e VPN em ambiente real.</p>
+        <div class="tut-meta">
+          <span>⏱ 10h</span>
+          <span>👁 410+ alunos</span>
+          <span class="lvl-i">● Iniciante → Avançado</span>
         </div>
-        <div class="ebook-footer">
-          <span class="ebook-price">R$ 54,90</span>
-          <span class="ebook-pages">📄 160 páginas</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
+          <span class="tut-price">R$ 99,90</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
         </div>
       </div>
     </div>
 
-    <!-- eBook 4 -->
-    <div class="ebook-card">
-      <div class="ebook-cover" style="background:#ffe4e6;">🌐</div>
-      <div class="ebook-info">
-        <h3>Servidor Web com IIS, Apache & Nginx</h3>
-        <p>
-          Configure servidores web do zero: IIS no Windows Server com PHP e SSL, Apache e Nginx
-          no Linux com virtual hosts, Let's Encrypt, proxy reverso e otimização de performance.
-          Inclui exemplos práticos de hospedagem de aplicações.
-        </p>
-        <div class="ebook-tags">
-          <span class="ebook-tag">IIS</span>
-          <span class="ebook-tag">Apache</span>
-          <span class="ebook-tag">Nginx</span>
-          <span class="ebook-tag">PHP</span>
-          <span class="ebook-tag">SSL</span>
-          <span class="ebook-tag">Intermediário</span>
-        </div>
-        <div class="ebook-footer">
-          <span class="ebook-price">R$ 44,90</span>
-          <span class="ebook-pages">📄 145 páginas</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- eBook 5 -->
-    <div class="ebook-card">
-      <div class="ebook-cover" style="background:#ede9fe;">📡</div>
-      <div class="ebook-info">
-        <h3>Redes do Zero — TCP/IP ao roteamento</h3>
-        <p>
-          Fundamentos completos de redes: modelo OSI, TCP/IP, endereçamento e sub-redes,
-          switching, roteamento estático e dinâmico, DNS, DHCP e cabeamento estruturado.
-          Ideal para quem está ingressando na área ou quer reforçar a base.
-        </p>
-        <div class="ebook-tags">
-          <span class="ebook-tag">Redes</span>
-          <span class="ebook-tag">TCP/IP</span>
-          <span class="ebook-tag">DNS</span>
-          <span class="ebook-tag">DHCP</span>
-          <span class="ebook-tag">Iniciante</span>
-        </div>
-        <div class="ebook-footer">
-          <span class="ebook-price">R$ 49,90</span>
-          <span class="ebook-pages">📄 190 páginas</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- eBook 6 -->
-    <div class="ebook-card">
-      <div class="ebook-cover" style="background:#e0f2fe;">☁️</div>
-      <div class="ebook-info">
-        <h3>Cloud & Virtualização para TI</h3>
-        <p>
-          Introdução à cloud, Docker, containers, VMs com Hyper-V e VirtualBox, e conceitos
-          de infraestrutura como código. Aprenda a criar laboratórios virtuais e ambientes
-          de produção escaláveis mesmo com recursos limitados.
-        </p>
-        <div class="ebook-tags">
-          <span class="ebook-tag">Docker</span>
-          <span class="ebook-tag">Hyper-V</span>
-          <span class="ebook-tag">VirtualBox</span>
-          <span class="ebook-tag">Cloud</span>
-          <span class="ebook-tag">Intermediário</span>
-        </div>
-        <div class="ebook-footer">
-          <span class="ebook-price">R$ 59,90</span>
-          <span class="ebook-pages">📄 175 páginas</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /.ebook-grid -->
+  </div><!-- /#tut-grid -->
 </div><!-- /.page-content -->
 
 <!-- ═══ FOOTER ═══ -->
@@ -320,8 +344,23 @@ $(document).ready(function(){
   $(window).on('scroll',function(){
     $('header').css('box-shadow',$(window).scrollTop()>10?'0 2px 12px rgba(0,0,0,.10)':'none');
   });
-  ScrollReveal().reveal('.ebook-card', { origin:'left', duration:700, distance:'24px', interval:120 });
-  ScrollReveal().reveal('.ebook-banner', { origin:'bottom', duration:800, distance:'20px' });
+
+  /* Filtro multi-categoria (data-cat pode ter múltiplos valores separados por espaço) */
+  $('.filter-btn').on('click', function(){
+    $('.filter-btn').removeClass('active');
+    $(this).addClass('active');
+    const cat = $(this).data('filter');
+    if(cat === 'all'){
+      $('.tut-card').fadeIn(250);
+    } else {
+      $('.tut-card').each(function(){
+        const cats = ($(this).data('cat') || '').split(' ');
+        cats.includes(cat) ? $(this).fadeIn(250) : $(this).hide();
+      });
+    }
+  });
+
+  ScrollReveal().reveal('.tut-card', { origin:'bottom', duration:700, distance:'20px', interval:100 });
 });
 </script>
 </body>

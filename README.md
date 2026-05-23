@@ -1,24 +1,23 @@
-# Hi-Tech | Tecnologia & Soluções
+# 🍔 Landing Page
 
-Site estático responsivo para GitHub Pages, com páginas de início, softwares, tutoriais, eBooks e portfólio.
+Uma landing page responsiva com tema de restaurante, construída com HTML, CSS e JavaScript. Este projeto apresenta um design limpo com animações suaves.
 
-## Estrutura
+## 🌐 Visualize o projeto:
 
-- `index.html` — página inicial.
-- `shared.css` — estilos comuns usados pelas páginas internas.
-- `softwares.html` — página de softwares e serviços.
-- `tutoriais.html` — página de tutoriais e cursos.
-- `ebooks.html` — biblioteca de eBooks.
-- `portfolio.html` — projetos e competências técnicas.
+**[Ver Projeto Online](https://larissakich.github.io/landing-page-food-theme/)**
 
-## Publicação no GitHub Pages
+## 🛠️ Tecnologias Utilizadas
 
-Envie todos os arquivos para a raiz do repositório. Depois, no GitHub, acesse **Settings > Pages**, selecione a branch principal e publique a partir da pasta raiz.
+- **HTML5**: Marcação semântica
+- **CSS3**: Estilização
+- **JavaScript**: Funcionalidade interativa
+- **jQuery**: Manipulação DOM e manipulação de eventos
+- **ScrollReveal**: Animações de scroll
+- **Font Awesome**: Ícones
+- **Google Fonts**: Fontes
 
-## Observações
+## 🚀 Como Começar
 
-Mantenha os arquivos de imagem nos caminhos usados pelo HTML, como `wave.svg`, `avatar.png` e `src/images/eu2.png`, caso estejam presentes no seu projeto original.
-
-## Personalização
-
-As cores principais ficam no bloco `:root` do `shared.css`. Os links de WhatsApp, Instagram, YouTube, e-mail e botões de compra/download podem ser alterados diretamente nos arquivos HTML.
+1. Clone ou baixe os arquivos do projeto
+2. Abra o arquivo `index.html` no seu navegador
+3. Não é necessária configuração adicional - todas as dependências são carregadas via CDN

@@ -3,334 +3,798 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tutoriais | Hi-Tech</title>
+  <title>eBooks | Hi-Tech</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="shared.css"/>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
+
   <style>
-    /* ── Card de vídeo/curso ── */
-    .tut-card {
-      background:var(--white); border-radius:20px; overflow:hidden;
-      box-shadow:var(--shadow); transition:transform .3s, box-shadow .3s;
-      display:flex; flex-direction:column;
-    }
-    .tut-card:hover { transform:translateY(-6px); box-shadow:0 14px 32px rgba(0,0,0,.13); }
+    /* ==========================================================
+       Página exclusiva de eBooks
+       Diferente da página de Tutoriais/Cursos
+       ========================================================== */
 
-    .tut-thumb {
-      height:165px; background:var(--secondary-bg);
-      display:flex; align-items:center; justify-content:center;
-      position:relative; overflow:hidden;
-    }
-    .tut-thumb-label {
-      font-family:'Bebas Neue',sans-serif; font-size:4.5rem;
-      color:rgba(233,162,9,.18); letter-spacing:3px; user-select:none;
-    }
-    .tut-play {
-      position:absolute; width:56px; height:56px;
-      border:3px solid var(--accent); border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      background:rgba(255,255,255,.85); cursor:pointer;
-      transition:.25s; z-index:2;
-    }
-    .tut-play i { color:var(--accent); font-size:1.1rem; margin-left:3px; }
-    .tut-card:hover .tut-play { background:var(--accent); }
-    .tut-card:hover .tut-play i { color:var(--white); }
-
-    .tut-cat-tag {
-      position:absolute; top:12px; left:12px; z-index:3;
-      background:var(--accent); color:var(--white);
-      font-size:.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
-      padding:4px 12px; border-radius:20px;
-    }
-    .tut-type-tag {
-      position:absolute; top:12px; right:12px; z-index:3;
-      background:var(--white); color:var(--dark);
-      font-size:.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
-      padding:4px 12px; border-radius:20px; box-shadow:var(--shadow);
+    .ebook-showcase {
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:34px;
+      align-items:center;
+      background:linear-gradient(135deg, var(--secondary-bg), #fff4d2);
+      border-radius:28px;
+      padding:36px;
+      box-shadow:var(--shadow);
+      margin-bottom:42px;
+      overflow:hidden;
+      position:relative;
     }
 
-    .tut-body { padding:20px 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
-    .tut-body h3 { font-size:1rem; font-weight:700; line-height:1.35; }
-    .tut-body p  { font-size:.84rem; color:var(--muted); line-height:1.65; flex:1; }
-    .tut-meta    { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
-    .tut-meta span { font-size:.76rem; color:var(--muted); display:flex; align-items:center; gap:5px; }
-    .tut-meta .lvl-i { color:#2a9d5c; font-weight:700; }
-    .tut-meta .lvl-m { color:var(--accent); font-weight:700; }
-    .tut-meta .lvl-a { color:#e63946; font-weight:700; }
-    .tut-link {
-      display:inline-flex; align-items:center; gap:6px;
-      font-size:.82rem; font-weight:700; color:var(--accent);
-      text-decoration:none; transition:.2s; padding-top:8px;
+    .ebook-showcase::after {
+      content:'';
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:rgba(233,162,9,.18);
+      right:-90px;
+      top:-90px;
+    }
+
+    .showcase-text {
+      position:relative;
+      z-index:2;
+    }
+
+    .showcase-kicker {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--accent);
+      font-size:.78rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      margin-bottom:12px;
+    }
+
+    .showcase-kicker::before {
+      content:'';
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--accent);
+    }
+
+    .ebook-showcase h2 {
+      font-size:clamp(1.8rem, 4vw, 3rem);
+      line-height:1.08;
+      font-weight:900;
+      max-width:620px;
+      margin-bottom:14px;
+    }
+
+    .ebook-showcase h2 span {
+      color:var(--accent);
+    }
+
+    .ebook-showcase p {
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.96rem;
+      max-width:560px;
+    }
+
+    .showcase-actions {
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:14px;
+      margin-top:24px;
+    }
+
+    .showcase-price {
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+
+    .showcase-price strong {
+      color:var(--accent);
+      font-size:2rem;
+      font-weight:900;
+    }
+
+    .showcase-price small {
+      color:var(--muted);
+      font-size:.78rem;
+      text-decoration:line-through;
+    }
+
+    .ebook-stack {
+      position:relative;
+      z-index:2;
+      min-height:320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .book {
+      position:absolute;
+      width:180px;
+      height:250px;
+      border-radius:10px 22px 22px 10px;
+      box-shadow:12px 16px 24px rgba(0,0,0,.18);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:20px 18px;
+      color:#fff;
+      overflow:hidden;
+      transition:transform .3s ease;
+    }
+
+    .book::before {
+      content:'';
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:14px;
+      background:rgba(0,0,0,.2);
+    }
+
+    .book::after {
+      content:'';
+      position:absolute;
+      right:-60px;
+      top:-50px;
+      width:150px;
+      height:150px;
+      background:rgba(255,255,255,.16);
+      border-radius:50%;
+    }
+
+    .book-main {
+      background:linear-gradient(135deg,#e9a209,#ffcb45);
+      transform:rotate(0deg) translateY(-4px);
+      z-index:4;
+    }
+
+    .book-left {
+      background:linear-gradient(135deg,#1e40af,#60a5fa);
+      transform:rotate(-13deg) translateX(-88px) translateY(22px);
+      z-index:2;
+    }
+
+    .book-right {
+      background:linear-gradient(135deg,#065f46,#34d399);
+      transform:rotate(13deg) translateX(88px) translateY(22px);
+      z-index:3;
+    }
+
+    .ebook-showcase:hover .book-main {
+      transform:rotate(0deg) translateY(-14px);
+    }
+
+    .ebook-showcase:hover .book-left {
+      transform:rotate(-16deg) translateX(-100px) translateY(20px);
+    }
+
+    .ebook-showcase:hover .book-right {
+      transform:rotate(16deg) translateX(100px) translateY(20px);
+    }
+
+    .book-title {
+      position:relative;
+      z-index:2;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:2rem;
+      letter-spacing:1.6px;
+      line-height:1;
+    }
+
+    .book-icon {
+      position:relative;
+      z-index:2;
+      font-size:3rem;
+      align-self:flex-end;
+    }
+
+    .ebook-tools {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:30px;
+    }
+
+    .ebook-filter {
+      border:2px solid var(--accent-light);
+      background:transparent;
+      border-radius:999px;
+      padding:8px 18px;
+      font-family:'Poppins',sans-serif;
+      font-size:.82rem;
+      font-weight:700;
+      cursor:pointer;
+      color:var(--muted);
+      transition:.25s;
+    }
+
+    .ebook-filter.active,
+    .ebook-filter:hover {
+      background:var(--accent);
+      color:var(--white);
+      border-color:var(--accent);
+      transform:translateY(-2px);
+    }
+
+    .ebook-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(285px, 1fr));
+      gap:24px;
+    }
+
+    .ebook-card {
+      background:var(--white);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+      border:2px solid transparent;
+    }
+
+    .ebook-card:hover {
+      transform:translateY(-10px) scale(1.015);
+      box-shadow:0 18px 38px rgba(0,0,0,.15);
+      border-color:rgba(233,162,9,.55);
+    }
+
+    .ebook-cover-area {
+      height:210px;
+      background:var(--secondary-bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .ebook-cover-area::before {
+      content:'PDF';
+      position:absolute;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:7rem;
+      letter-spacing:4px;
+      color:rgba(255,255,255,.35);
+      right:18px;
+      bottom:-22px;
+      line-height:1;
+    }
+
+    .ebook-card-cover {
+      width:126px;
+      height:168px;
+      border-radius:8px 18px 18px 8px;
+      box-shadow:9px 12px 20px rgba(0,0,0,.18);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:16px 14px;
+      color:#fff;
+      position:relative;
+      z-index:2;
+      transition:transform .3s ease;
+    }
+
+    .ebook-card:hover .ebook-card-cover {
+      transform:translateY(-6px) rotate(-2deg);
+    }
+
+    .ebook-card-cover::before {
+      content:'';
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:10px;
+      background:rgba(0,0,0,.22);
+      border-radius:8px 0 0 8px;
+    }
+
+    .cover-title {
+      position:relative;
+      z-index:2;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:1.35rem;
+      letter-spacing:1px;
+      line-height:1.05;
+    }
+
+    .cover-icon {
+      position:relative;
+      z-index:2;
+      font-size:2.3rem;
+      align-self:flex-end;
+    }
+
+    .ebook-body {
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      flex:1;
+    }
+
+    .ebook-body h3 {
+      font-size:1.05rem;
+      line-height:1.35;
+      font-weight:800;
+    }
+
+    .ebook-body p {
+      color:var(--muted);
+      font-size:.86rem;
+      line-height:1.7;
+      flex:1;
+    }
+
+    .ebook-meta {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .ebook-meta span {
+      background:var(--secondary-bg);
+      color:var(--dark);
+      border-radius:999px;
+      padding:4px 10px;
+      font-size:.68rem;
+      font-weight:800;
+    }
+
+    .ebook-footer {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-top:14px;
       border-top:1px solid rgba(0,0,0,.06);
+      margin-top:4px;
     }
-    .tut-link:hover { color:var(--dark); }
-    .tut-link i { transition:.2s; }
-    .tut-card:hover .tut-link i { transform:translateX(4px); }
 
-    /* Badge free/pago */
-    .tut-price { font-size:.9rem; font-weight:700; color:var(--accent); }
-    .tut-price.free { color:#2a9d5c; }
-
-    /* Filtro */
-    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
-    .filter-btn {
-      border:2px solid var(--accent-light); background:transparent;
-      border-radius:20px; padding:7px 20px; font-family:'Poppins',sans-serif;
-      font-size:.82rem; font-weight:600; cursor:pointer; color:var(--muted); transition:.2s;
+    .ebook-price {
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
     }
-    .filter-btn.active, .filter-btn:hover { background:var(--accent); color:var(--white); border-color:var(--accent); }
+
+    .ebook-price strong {
+      color:var(--accent);
+      font-size:1.25rem;
+      font-weight:900;
+    }
+
+    .ebook-price small {
+      color:var(--muted);
+      font-size:.72rem;
+    }
+
+    .level-strip {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:48px;
+      padding:26px 28px;
+      background:var(--white);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .level-strip h2 {
+      font-size:1.35rem;
+      font-weight:900;
+      margin-bottom:4px;
+    }
+
+    .level-strip p {
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.7;
+      max-width:620px;
+    }
+
+    .level-icons {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .level-icons span {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      background:var(--secondary-bg);
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:.78rem;
+      font-weight:800;
+      color:var(--dark);
+    }
+
+    @media(max-width:900px) {
+      .ebook-showcase {
+        grid-template-columns:1fr;
+        padding:28px;
+      }
+
+      .ebook-stack {
+        min-height:260px;
+      }
+
+      .book {
+        width:145px;
+        height:205px;
+      }
+
+      .book-left {
+        transform:rotate(-12deg) translateX(-65px) translateY(22px);
+      }
+
+      .book-right {
+        transform:rotate(12deg) translateX(65px) translateY(22px);
+      }
+
+      .level-strip {
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .level-icons {
+        justify-content:flex-start;
+      }
+    }
+
+    @media(max-width:560px) {
+      .ebook-showcase {
+        padding:24px 20px;
+      }
+
+      .showcase-actions {
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .ebook-stack {
+        min-height:230px;
+      }
+
+      .book {
+        width:125px;
+        height:180px;
+        padding:14px 12px;
+      }
+
+      .book-title {
+        font-size:1.45rem;
+      }
+
+      .book-icon {
+        font-size:2.4rem;
+      }
+
+      .book-left {
+        transform:rotate(-10deg) translateX(-48px) translateY(20px);
+      }
+
+      .book-right {
+        transform:rotate(10deg) translateX(48px) translateY(20px);
+      }
+
+      .ebook-footer {
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .ebook-footer .card-btn {
+        width:100%;
+        justify-content:center;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- ═══ NAVBAR ═══ -->
 <header>
   <nav id="navbar">
     <a id="nav_logo" href="index.html">HI<span class="logo-dash"></span><em>TECH</em></a>
+
     <ul id="nav_list">
       <li class="nav-item"><a href="index.html">Início</a></li>
       <li class="nav-item"><a href="softwares.html">Softwares</a></li>
-      <li class="nav-item active"><a href="tutoriais.html">Tutoriais</a></li>
-      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
-      <li class="nav-item"><a href="index.html#about">Portfólio</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item active"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
     </ul>
+
     <button class="btn-contact" onclick="location.href='index.html#contact'">Fale Comigo</button>
-    <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
+    <button id="mobile_btn" aria-label="Abrir menu"><i class="fa-solid fa-bars"></i></button>
   </nav>
+
   <div id="mobile_menu">
     <ul id="mobile_nav_list">
       <li class="nav-item"><a href="index.html">Início</a></li>
       <li class="nav-item"><a href="softwares.html">Softwares</a></li>
-      <li class="nav-item active"><a href="tutoriais.html">Tutoriais</a></li>
-      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
-      <li class="nav-item"><a href="index.html#about">Portfólio</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item active"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
     </ul>
     <button class="btn-contact" style="margin-top:8px" onclick="location.href='index.html#contact'">Fale Comigo</button>
   </div>
 </header>
 
-<!-- ═══ HERO ═══ -->
 <div class="page-hero">
-  <p class="breadcrumb"><a href="index.html">Início</a> › Tutoriais</p>
-  <h1>Tutoriais & <span>Cursos</span></h1>
+  <p class="breadcrumb"><a href="index.html">Início</a> › eBooks</p>
+  <h1>Biblioteca de <span>eBooks</span></h1>
   <p>
-    Vídeos de instalação de softwares, mini-cursos e cursos completos sobre
-    Windows, Linux, redes e infraestrutura de TI.
+    Materiais técnicos em PDF para estudar, consultar e aplicar no dia a dia de suporte,
+    redes, servidores e infraestrutura de TI.
   </p>
 </div>
 
-<!-- ═══ CONTEÚDO ═══ -->
-<div class="page-content">
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">Todos</button>
-    <button class="filter-btn" data-filter="instalacao">Instalação</button>
-    <button class="filter-btn" data-filter="minicurso">Mini-curso</button>
-    <button class="filter-btn" data-filter="curso">Curso Completo</button>
-    <button class="filter-btn" data-filter="windows">Windows</button>
-    <button class="filter-btn" data-filter="linux">Linux</button>
-    <button class="filter-btn" data-filter="redes">Redes</button>
+<main class="page-content">
+
+  <section class="ebook-showcase">
+    <div class="showcase-text">
+      <div class="showcase-kicker">Biblioteca técnica Hi-Tech</div>
+      <h2>Guias práticos para evoluir em <span>infraestrutura de TI</span></h2>
+      <p>
+        Conteúdos organizados para técnicos, analistas, estudantes e entusiastas que querem
+        aprender com exemplos diretos, linguagem simples e foco no uso real em ambientes corporativos.
+      </p>
+
+      <div class="showcase-actions">
+        <a href="#ebooks-lista" class="card-btn">
+          <i class="fa-solid fa-book-open"></i> Ver eBooks
+        </a>
+        <div class="showcase-price">
+          <strong>Pack R$ 199,90</strong>
+          <small>Comprando separado: R$ 318,50</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="ebook-stack" aria-hidden="true">
+      <div class="book book-left">
+        <div class="book-title">Redes<br>TCP/IP</div>
+        <div class="book-icon">📡</div>
+      </div>
+      <div class="book book-main">
+        <div class="book-title">Windows<br>Server</div>
+        <div class="book-icon">📘</div>
+      </div>
+      <div class="book book-right">
+        <div class="book-title">Linux<br>Admin</div>
+        <div class="book-icon">🐧</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ebook-tools" id="ebooks-lista">
+    <button class="ebook-filter active" data-filter="all">Todos</button>
+    <button class="ebook-filter" data-filter="windows">Windows</button>
+    <button class="ebook-filter" data-filter="linux">Linux</button>
+    <button class="ebook-filter" data-filter="redes">Redes</button>
+    <button class="ebook-filter" data-filter="seguranca">Segurança</button>
+    <button class="ebook-filter" data-filter="web">Web/Servidores</button>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       GRID DE TUTORIAIS
-       Para adicionar:
-       1. Copie um bloco .tut-card
-       2. Edite: data-cat, label do thumb, tags,
-          h3, p, meta (duração/views/nível),
-          preço e href do link
-       ══════════════════════════════════════════ -->
-  <div class="card-grid" id="tut-grid">
+  <section class="ebook-grid">
 
-    <!-- ─── INSTALAÇÕES ─── -->
-    <div class="tut-card" data-cat="instalacao windows">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">WIN</span>
-        <span class="tut-cat-tag">Windows</span>
-        <span class="tut-type-tag">Instalação</span>
-        <!-- Troque href pelo link do YouTube -->
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>Como instalar o Windows 11 do zero</h3>
-        <p>Particionamento, drivers, configurações iniciais e otimizações pós-instalação. Completo e prático.</p>
-        <div class="tut-meta">
-          <span>⏱ 18 min</span>
-          <span>👁 2.4K views</span>
-          <span class="lvl-i">● Iniciante</span>
+    <article class="ebook-card" data-cat="windows servidor">
+      <div class="ebook-cover-area">
+        <div class="ebook-card-cover" style="background:linear-gradient(135deg,#1e40af,#60a5fa)">
+          <div class="cover-title">Windows<br>Server</div>
+          <div class="cover-icon">📘</div>
         </div>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
-          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
-        </a>
       </div>
+      <div class="ebook-body">
+        <h3>Windows Server do Zero</h3>
+        <p>
+          Guia completo para instalação, AD DS, DNS, DHCP, File Server, GPO, IIS e boas práticas
+          de segurança em ambiente corporativo.
+        </p>
+        <div class="ebook-meta">
+          <span>180 páginas</span>
+          <span>Iniciante → Avançado</span>
+          <span>PDF</span>
+        </div>
+        <div class="ebook-footer">
+          <div class="ebook-price">
+            <strong>R$ 49,90</strong>
+            <small>acesso vitalício</small>
+          </div>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ebook-card" data-cat="linux servidor">
+      <div class="ebook-cover-area">
+        <div class="ebook-card-cover" style="background:linear-gradient(135deg,#065f46,#34d399)">
+          <div class="cover-title">Linux<br>Admin</div>
+          <div class="cover-icon">🐧</div>
+        </div>
+      </div>
+      <div class="ebook-body">
+        <h3>Linux para Administradores</h3>
+        <p>
+          Terminal, pacotes, serviços, permissões, SSH, cron, shell script e administração de
+          servidores Ubuntu/Debian em produção.
+        </p>
+        <div class="ebook-meta">
+          <span>210 páginas</span>
+          <span>Intermediário</span>
+          <span>PDF</span>
+        </div>
+        <div class="ebook-footer">
+          <div class="ebook-price">
+            <strong>R$ 59,90</strong>
+            <small>acesso vitalício</small>
+          </div>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ebook-card" data-cat="seguranca redes">
+      <div class="ebook-cover-area">
+        <div class="ebook-card-cover" style="background:linear-gradient(135deg,#7c2d12,#f97316)">
+          <div class="cover-title">Segurança<br>em Redes</div>
+          <div class="cover-icon">🔐</div>
+        </div>
+      </div>
+      <div class="ebook-body">
+        <h3>Segurança em Redes Corporativas</h3>
+        <p>
+          Firewall, VPN, VLAN, IDS/IPS, monitoramento com Zabbix, pfSense e políticas básicas
+          para ambientes Windows e Linux.
+        </p>
+        <div class="ebook-meta">
+          <span>160 páginas</span>
+          <span>Intermediário</span>
+          <span>PDF</span>
+        </div>
+        <div class="ebook-footer">
+          <div class="ebook-price">
+            <strong>R$ 54,90</strong>
+            <small>acesso vitalício</small>
+          </div>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ebook-card" data-cat="web windows linux servidor">
+      <div class="ebook-cover-area">
+        <div class="ebook-card-cover" style="background:linear-gradient(135deg,#be123c,#fb7185)">
+          <div class="cover-title">Servidor<br>Web</div>
+          <div class="cover-icon">🌐</div>
+        </div>
+      </div>
+      <div class="ebook-body">
+        <h3>Servidor Web com IIS, Apache & Nginx</h3>
+        <p>
+          IIS com PHP e SSL, Apache/Nginx no Linux, virtual hosts, Let's Encrypt, proxy reverso
+          e publicação de aplicações.
+        </p>
+        <div class="ebook-meta">
+          <span>145 páginas</span>
+          <span>Intermediário</span>
+          <span>PDF</span>
+        </div>
+        <div class="ebook-footer">
+          <div class="ebook-price">
+            <strong>R$ 44,90</strong>
+            <small>acesso vitalício</small>
+          </div>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ebook-card" data-cat="redes">
+      <div class="ebook-cover-area">
+        <div class="ebook-card-cover" style="background:linear-gradient(135deg,#4a1d96,#8b5cf6)">
+          <div class="cover-title">Redes<br>do Zero</div>
+          <div class="cover-icon">📡</div>
+        </div>
+      </div>
+      <div class="ebook-body">
+        <h3>Redes do Zero — TCP/IP ao Roteamento</h3>
+        <p>
+          Modelo OSI, TCP/IP, endereçamento, sub-redes, switching, roteamento, DNS, DHCP e
+          cabeamento estruturado.
+        </p>
+        <div class="ebook-meta">
+          <span>190 páginas</span>
+          <span>Iniciante</span>
+          <span>PDF</span>
+        </div>
+        <div class="ebook-footer">
+          <div class="ebook-price">
+            <strong>R$ 49,90</strong>
+            <small>acesso vitalício</small>
+          </div>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ebook-card" data-cat="linux web servidor">
+      <div class="ebook-cover-area">
+        <div class="ebook-card-cover" style="background:linear-gradient(135deg,#134e4a,#14b8a6)">
+          <div class="cover-title">Cloud &<br>Virtualização</div>
+          <div class="cover-icon">☁️</div>
+        </div>
+      </div>
+      <div class="ebook-body">
+        <h3>Cloud & Virtualização para TI</h3>
+        <p>
+          Docker, containers, VMs com Hyper-V/VirtualBox, conceitos de cloud e criação de
+          laboratórios práticos para estudo.
+        </p>
+        <div class="ebook-meta">
+          <span>175 páginas</span>
+          <span>Intermediário</span>
+          <span>PDF</span>
+        </div>
+        <div class="ebook-footer">
+          <div class="ebook-price">
+            <strong>R$ 59,90</strong>
+            <small>acesso vitalício</small>
+          </div>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="level-strip">
+    <div>
+      <h2>Material feito para consulta rápida e estudo contínuo</h2>
+      <p>
+        Cada eBook pode ser usado como material de apoio em atendimentos, estudos, laboratórios,
+        treinamentos internos e preparação para atuar melhor em ambientes reais de TI.
+      </p>
     </div>
-
-    <div class="tut-card" data-cat="instalacao windows">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">OFF</span>
-        <span class="tut-cat-tag">Windows</span>
-        <span class="tut-type-tag">Instalação</span>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>Instalando Microsoft 365 (Office) corretamente</h3>
-        <p>Download oficial, instalação silenciosa via ODT e ativação. Sem crack, sem risco.</p>
-        <div class="tut-meta">
-          <span>⏱ 12 min</span>
-          <span>👁 1.8K views</span>
-          <span class="lvl-i">● Iniciante</span>
-        </div>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
-          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
+    <div class="level-icons">
+      <span><i class="fa-solid fa-user-graduate"></i> Estudantes</span>
+      <span><i class="fa-solid fa-headset"></i> Técnicos</span>
+      <span><i class="fa-solid fa-server"></i> Analistas</span>
     </div>
+  </section>
 
-    <div class="tut-card" data-cat="instalacao linux">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">LAMP</span>
-        <span class="tut-cat-tag">Linux</span>
-        <span class="tut-type-tag">Instalação</span>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>Servidor LAMP no Ubuntu — Apache, MySQL e PHP</h3>
-        <p>Do zero ao servidor web com SSL, hardening e backup automatizado em ambiente Linux.</p>
-        <div class="tut-meta">
-          <span>⏱ 32 min</span>
-          <span>👁 1.2K views</span>
-          <span class="lvl-m">● Intermediário</span>
-        </div>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
-          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
+</main>
 
-    <!-- ─── MINI-CURSOS ─── -->
-    <div class="tut-card" data-cat="minicurso windows">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">GPO</span>
-        <span class="tut-cat-tag">Active Directory</span>
-        <span class="tut-type-tag">Mini-curso</span>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>GPO na prática — bloqueando e liberando</h3>
-        <p>Políticas de grupo do zero. Gerencie usuários, restrições e configurações com eficiência corporativa.</p>
-        <div class="tut-meta">
-          <span>⏱ 45 min</span>
-          <span>👁 3.1K views</span>
-          <span class="lvl-a">● Avançado</span>
-        </div>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
-          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <div class="tut-card" data-cat="minicurso redes">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">VLAN</span>
-        <span class="tut-cat-tag">Redes</span>
-        <span class="tut-type-tag">Mini-curso</span>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>VLAN e segmentação de redes</h3>
-        <p>Criando VLANs no switch, roteamento inter-VLAN e boas práticas de segmentação para empresas.</p>
-        <div class="tut-meta">
-          <span>⏱ 28 min</span>
-          <span>👁 980 views</span>
-          <span class="lvl-m">● Intermediário</span>
-        </div>
-        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
-          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- ─── CURSOS COMPLETOS ─── -->
-    <div class="tut-card" data-cat="curso windows">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">WSRV</span>
-        <span class="tut-cat-tag">Windows Server</span>
-        <span class="tut-type-tag">Curso Completo</span>
-        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>Windows Server do Zero ao Avançado</h3>
-        <p>Instalação, AD DS, DNS, DHCP, File Server, GPO, IIS e segurança. Módulos práticos com laboratório virtual.</p>
-        <div class="tut-meta">
-          <span>⏱ 6h30</span>
-          <span>👁 500+ alunos</span>
-          <span class="lvl-i">● Iniciante → Avançado</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
-          <span class="tut-price">R$ 89,90</span>
-          <!-- Troque # pelo link de compra (Hotmart, Kirvano…) -->
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="tut-card" data-cat="curso linux">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">LNX</span>
-        <span class="tut-cat-tag">Linux</span>
-        <span class="tut-type-tag">Curso Completo</span>
-        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>Linux para Administradores de Sistemas</h3>
-        <p>Terminal, serviços, segurança, automação com shell script e administração de servidores em produção.</p>
-        <div class="tut-meta">
-          <span>⏱ 8h</span>
-          <span>👁 320+ alunos</span>
-          <span class="lvl-m">● Intermediário</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
-          <span class="tut-price">R$ 79,90</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="tut-card" data-cat="curso redes">
-      <div class="tut-thumb">
-        <span class="tut-thumb-label">NET</span>
-        <span class="tut-cat-tag">Redes</span>
-        <span class="tut-type-tag">Curso Completo</span>
-        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
-      </div>
-      <div class="tut-body">
-        <h3>Redes do Zero — TCP/IP ao pfSense</h3>
-        <p>Fundamentos de redes, endereçamento IP, switching, roteamento, firewall e VPN em ambiente real.</p>
-        <div class="tut-meta">
-          <span>⏱ 10h</span>
-          <span>👁 410+ alunos</span>
-          <span class="lvl-i">● Iniciante → Avançado</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
-          <span class="tut-price">R$ 99,90</span>
-          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /#tut-grid -->
-</div><!-- /.page-content -->
-
-<!-- ═══ FOOTER ═══ -->
 <footer>
   <img src="wave.svg" alt=""/>
   <div id="footer_items">
     <span id="copyright">&copy; 2025 Hi-Tech</span>
     <div class="social-btns">
-      <a href="https://wa.me/55XXXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-      <a href="https://instagram.com/seuperfil" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://youtube.com/@seucanal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://wa.me/55XXXXXXXXXX" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@seucanal" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
     </div>
   </div>
 </footer>
@@ -341,27 +805,32 @@ $(document).ready(function(){
     $('#mobile_menu').toggleClass('active');
     $(this).find('i').toggleClass('fa-bars fa-x');
   });
+
   $(window).on('scroll',function(){
     $('header').css('box-shadow',$(window).scrollTop()>10?'0 2px 12px rgba(0,0,0,.10)':'none');
   });
 
-  /* Filtro multi-categoria (data-cat pode ter múltiplos valores separados por espaço) */
-  $('.filter-btn').on('click', function(){
-    $('.filter-btn').removeClass('active');
+  $('.ebook-filter').on('click', function(){
+    $('.ebook-filter').removeClass('active');
     $(this).addClass('active');
+
     const cat = $(this).data('filter');
+
     if(cat === 'all'){
-      $('.tut-card').fadeIn(250);
+      $('.ebook-card').fadeIn(250);
     } else {
-      $('.tut-card').each(function(){
+      $('.ebook-card').each(function(){
         const cats = ($(this).data('cat') || '').split(' ');
         cats.includes(cat) ? $(this).fadeIn(250) : $(this).hide();
       });
     }
   });
 
-  ScrollReveal().reveal('.tut-card', { origin:'bottom', duration:700, distance:'20px', interval:100 });
+  ScrollReveal().reveal('.ebook-showcase', { origin:'bottom', duration:900, distance:'24px' });
+  ScrollReveal().reveal('.ebook-card', { origin:'bottom', duration:750, distance:'22px', interval:100 });
+  ScrollReveal().reveal('.level-strip', { origin:'bottom', duration:800, distance:'20px' });
 });
 </script>
+
 </body>
 </html>
